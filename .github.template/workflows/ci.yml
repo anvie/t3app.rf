@@ -1,0 +1,53 @@
+# Github workflow for CI
+# This code is part of $name_kebab_case$ project.
+
+name: deploy
+on:
+  push:
+    branches:
+      - main
+      - master
+  # schedule:
+  #   - cron: '0 0 * * *' # Everyday at 12am
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: $
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version: $
+          check-latest: true
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: $
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -p $ -H $  >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -avzrhcP --chown=www:www -e "ssh -p $" ./out/ $@$:/home/www/$name_kebab_case$/
+      
+      # - name: Sync node_modules
+      #   run: rsync -avzrhcP -e "ssh -p $" ./node_modules $@$:/home/www/$name_kebab_case$/
+
+      # - name: Restart Node Server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: $
+      #     username: $
+      #     key: $
+      #     port: $
+      #     script: |
+      #       sudo -u www pm2 restart $name_kebab_case$
+
