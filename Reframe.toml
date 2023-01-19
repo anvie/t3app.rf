@@ -1,0 +1,42 @@
+[reframe]
+name = "t3app"
+author = "robinsyihab@gmail.com"
+min_version = "0.5.1"
+
+[project]
+name = "MyWebapp"
+version = "0.1.0"
+ignore_dirs = [
+  "target",
+  "build",
+  ".next",
+  "node_modules"
+]
+ignore_files = [
+  ".flutter-plugins",
+  ".packages",
+  "*.iml"
+]
+finish_text = """Usage:
+    $ cd $name_kebab_case$
+Setup:
+    $ npm install
+To run (development):
+    $ npm run dev
+"""
+
+[[param]]
+description = { ask = "Description ?", default="My cool web app" }
+
+[[param]]
+author_name = { ask = "Author name?", default="Robin" }
+
+[[param]]
+author_email = { ask = "Author email?", default="robinsyihab@gmail.com" }
+
+[[param]]
+base_url = { ask = "Base URL", default = "https://example.com" }
+
+[[param]]
+powered_by = { ask = "Powered by", default = "Your Company, Inc." }
+
