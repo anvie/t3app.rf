@@ -21,6 +21,7 @@ finish_text = """Usage:
     $ cd $name_kebab_case$
 Setup:
     $ npm install
+    $ cp .env.example .env
 To run (development):
     $ npm run dev
 """
