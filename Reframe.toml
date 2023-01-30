@@ -21,9 +21,16 @@ finish_text = """Usage:
     $ cd $name_kebab_case$
 Setup:
     $ npm install
+    or
+    $ yarn install
+
+Configure:
     $ cp .env.example .env
-To run (development):
+
+Run (development):
     $ npm run dev
+    or
+    $ yarn dev
 """
 
 [[param]]
@@ -40,4 +47,17 @@ base_url = { ask = "Base URL", default = "https://example.com" }
 
 [[param]]
 powered_by = { ask = "Powered by", default = "Your Company, Inc." }
+
+[[param]]
+with_i18n = { ask = "Do you want to use i18n?", default = "false" }
+
+[[present]]
+path = "src/lang"
+if = "with_i18n"
+
+[[present]]
+path = "src/utils/i18n"
+if = "with_i18n"
+
+
 
