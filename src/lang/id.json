@@ -1,4 +1,5 @@
 {
-    "home.description": "$param.description$"
+    "home.description": "$param.description$",
+    "home.firstSteps": "Langkah pertama"
   }
   

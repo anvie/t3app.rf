@@ -60,7 +60,7 @@ const config = {
   reactStrictMode: false,
   swcMinify: true,
   i18n: {
-    locales: ["en"],
+    locales: ["en"{{#if with_i18n}},"id"{{/if}}],
     defaultLocale: "en",
   },
   webpack(config, { buildId, dev, isServer, defaultLoaders, webpack }) {
