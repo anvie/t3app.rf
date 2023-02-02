@@ -29,25 +29,25 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: $
+          key: $\{{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
 
       - name: Adding Known Hosts
-        run: ssh-keyscan -p $ -H $  >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p $\{{ secrets.SSH_PORT}} -H $\{{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -avzrhcP --chown=www:www -e "ssh -p $" ./out/ $@$:/home/www/$name_kebab_case$/
+        run: rsync -avzrhcP --chown=www:www -e "ssh -p $\{{ secrets.SSH_PORT }}" ./out/ $\{{ secrets.SSH_USERNAME }}@$\{{ secrets.SSH_HOST }}:/home/www/$name_kebab_case$/
       
       # - name: Sync node_modules
-      #   run: rsync -avzrhcP -e "ssh -p $" ./node_modules $@$:/home/www/$name_kebab_case$/
+      #   run: rsync -avzrhcP -e "ssh -p $" ./node_modules $\{{ secrets.SSH_USERNAME }}@$\{{ secrets.SSH_HOST }}:/home/www/$name_kebab_case$/
 
       # - name: Restart Node Server
       #   uses: appleboy/ssh-action@master
       #   with:
-      #     host: $
-      #     username: $
-      #     key: $
-      #     port: $
+      #     host: $\{{ secrets.SSH_HOST }}
+      #     username: $\{{ secrets.SSH_USERNAME }}
+      #     key: $\{{ secrets.SSH_PRIVATE_KEY }}
+      #     port: $\{{ secrets.SSH_PORT }}
       #     script: |
       #       sudo -u www pm2 restart $name_kebab_case$
 
