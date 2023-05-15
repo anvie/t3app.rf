@@ -63,6 +63,7 @@ const config = {
     locales: ["en"{{#if with_i18n}},"id"{{/if}}],
     defaultLocale: "en",
   },
+  distDir: "build",
   webpack(config, { buildId, dev, isServer, defaultLoaders, webpack }) {
     config.resolve.modules.push(path.resolve("./"));
     const oneOf = config.module.rules.find(
