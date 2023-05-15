@@ -13,14 +13,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      API_BASE_URL: $
+      API_BASE_URL: $\{{ secrets.API_BASE_URL }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v2.5.1
         with:
-          node-version: $
+          node-version: 20.1.0
           check-latest: true
 
       - run: npm install
