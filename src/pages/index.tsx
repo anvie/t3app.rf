@@ -7,8 +7,11 @@ import styles from "../styles/Home.module.css";
 
 import { api } from "../utils/api";
 import { cn } from "../utils/cssutil";
-import _L from "../utils/i18n";
 
+{{#if with_i18n}}
+import _L from "../utils/i18n";
+{{/if}}
+  
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
