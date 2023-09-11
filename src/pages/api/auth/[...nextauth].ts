@@ -4,8 +4,10 @@ import GoogleProvider from "next-auth/providers/google";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-import { env } from "../../../env/server.mjs";
-import { prisma } from "../../../server/db";
+import { env } from "@env/server.mjs";
+import { prisma } from "@server/db";
+
+import NuSidProvider from "@libs/NuSid";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
@@ -24,9 +26,9 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    NuSidProvider({
+      clientId: env.NUID_CLIENT_ID,
+      clientSecret: env.NUID_CLIENT_SECRET,
     }),
     /**
      * ...add more providers here
