@@ -56,7 +56,7 @@ path = "src/lang"
 if = "with_i18n"
 
 [[present]]
-path = "src/utils/i18n"
+path = "src/utils/i18n.ts"
 if = "with_i18n"
 
 
