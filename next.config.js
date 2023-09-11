@@ -60,7 +60,7 @@ const config = {
   reactStrictMode: false,
   swcMinify: true,
   i18n: {
-    locales: ["en"{{#if with_i18n}},"id"{{/if}}],
+    locales: ["en", "id"],
     defaultLocale: "en",
   },
   distDir: "build",

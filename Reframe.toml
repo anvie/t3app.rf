@@ -48,16 +48,3 @@ base_url = { ask = "Base URL", default = "https://example.com" }
 [[param]]
 powered_by = { ask = "Powered by", default = "Your Company, Inc." }
 
-# [[param]]
-# with_i18n = { ask = "Do you want to use i18n?", default = "false" }
-
-# [[present]]
-# path = "src/lang"
-# if = "with_i18n"
-
-# [[present]]
-# path = "src/utils/i18n.ts"
-# if = "with_i18n"
-
-
-
