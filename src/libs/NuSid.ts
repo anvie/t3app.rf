@@ -28,8 +28,6 @@ export default function NuSidProvider<P extends Record<string, any> = NuSidProfi
       url: `${env.NUID_API_URL}/oauth/token`,
       // TODO: Remove this
       async request({ client, params, checks, provider }) {
-        console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ client", client)
-        console.log("🚀 ~ file: NuSid.ts:31 ~ request ~ options", options)
         const response = await client.oauthCallback(
           provider.callbackUrl,
           params,
@@ -41,8 +39,16 @@ export default function NuSidProvider<P extends Record<string, any> = NuSidProfi
             },
           }
         );
-        console.log("🚀 ~ file: NuSid.ts:41 ~ request ~ response", response)
-        return { tokens: response };
+        return {
+          tokens: {
+            access_token: response.access_token,
+            refresh_token: response.refresh_token,
+            expires_at: response.expires_at,
+            token_type: response.token_type,
+            scope: response.scope,
+            id_token: response.id_token
+          }
+        };
       },
     },
     userinfo: {
