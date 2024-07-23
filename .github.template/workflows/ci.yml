@@ -36,18 +36,34 @@ jobs:
         run: ssh-keyscan -p $\{{ secrets.SSH_PORT}} -H $\{{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -avzrhcP --chown=www:www -e "ssh -p $\{{ secrets.SSH_PORT }}" ./build/ $\{{ secrets.SSH_USERNAME }}@$\{{ secrets.SSH_HOST }}:/home/www/$name_kebab_case$/
-      
-      # - name: Sync node_modules
-      #   run: rsync -avzrhcP -e "ssh -p $" ./node_modules $\{{ secrets.SSH_USERNAME }}@$\{{ secrets.SSH_HOST }}:/home/www/$name_kebab_case$/
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzrhcP --chown=$\{{ secrets.SSH_USERNAME }}:$\{{ secrets.SSH_USERNAME }}
+          path: ./build/
+          remote_path: /home/www/$name_kebab_case$
+          remote_host: $\{{ secrets.SSH_HOST }}
+          remote_port: $\{{ secrets.SSH_PORT }}
+          remote_user: $\{{ secrets.SSH_USERNAME }}
+          remote_key: $\{{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Restart Node Server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: $\{{ secrets.SSH_HOST }}
-      #     username: $\{{ secrets.SSH_USERNAME }}
-      #     key: $\{{ secrets.SSH_PRIVATE_KEY }}
-      #     port: $\{{ secrets.SSH_PORT }}
-      #     script: |
-      #       sudo -u www pm2 restart $name_kebab_case$
+      - name: Sync node_modules
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzrhcP --chown=$\{{ secrets.SSH_USERNAME }}:$\{{ secrets.SSH_USERNAME }} --delete-after
+          path: ./node_modules
+          remote_path: /home/www/$name_kebab_case$/
+          remote_host: $\{{ secrets.SSH_HOST }}
+          remote_port: $\{{ secrets.SSH_PORT }}
+          remote_user: $\{{ secrets.SSH_USERNAME }}
+          remote_key: $\{{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Restart Node Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: $\{{ secrets.SSH_HOST }}
+          username: $\{{ secrets.SSH_USERNAME }}
+          key: $\{{ secrets.SSH_PRIVATE_KEY }}
+          port: $\{{ secrets.SSH_PORT }}
+          script: |
+            pm2 restart $name_kebab_case$
 
